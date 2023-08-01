@@ -1,0 +1,22 @@
+.but
+{
+    width: 90%;
+}
+
+.body
+{
+    display: flex;
+    justify-content: center;
+}
+
+.a2_time
+{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #e7eeff;
+    font-family: 'Handjet';
+    font-size: 55pt;
+    top:43%;
+    position: absolute;
+}
