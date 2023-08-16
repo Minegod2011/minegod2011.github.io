@@ -1,0 +1,76 @@
+body
+{
+    background-color: black;
+}
+
+.but
+{
+    width: 90%;
+}
+
+.center
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 5%;
+    height: 100vh;
+}
+
+.as_time
+{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #e7eeff;
+    font-family: 'Handjet';
+    font-size: 55pt;
+    margin-bottom: 20px;
+}
+
+.links a {
+    display: block;
+    margin: 5px 0;
+    text-decoration: none;
+}
+
+.Chemistry, .Physics, .Math, .EL, .IT
+{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #e7eeff;
+    font-family: 'Kanit', sans-serif;
+    font-size: 35pt;
+}
+
+.as_time
+{
+    margin-top: 5vh;
+}
+
+.Chemistry
+{
+    margin-top: 7vh;
+}
+
+.Physics
+{
+    margin-top: 2vh;
+}
+
+.Math
+{
+    margin-top: 2vh;
+}
+
+.EL
+{
+    margin-top: 2vh;
+}
+
+.IT
+{
+    margin-top: 2vh;
+}

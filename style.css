@@ -1,0 +1,49 @@
+/*--indigo-dye: #064276ff;
+--vista-blue: #7f95d1ff;
+--oxford-blue: #061a40ff;
+--prussian-blue: #003559ff;
+*/
+body {
+    background-color: #7f95d1ff;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+  }
+  
+  .center {
+    text-align: center; 
+  }
+  
+  .time_but {
+    background-color: #7f95d1ff;
+    border: none;
+    border-radius: 5px;
+    box-shadow: none;
+    font-family: 'Handjet';
+    font-size: 50pt;
+    color: #e7eeff;
+    margin-top: 8vh;
+  }
+  
+  .as_but, .a2_but {
+    font-family: 'Kanit', sans-serif;
+    background-color: #7f95d1ff;
+    border: none;
+    border-radius: 2px;
+    box-shadow: none;
+    font-size: 30pt;
+    color: aliceblue;
+  }
+  
+  .as_but
+  {
+    margin-top: 25vh;
+  }
+  
+  .a2_but
+  {
+    margin-top: 10vh;
+  }
+  
