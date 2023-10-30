@@ -6,14 +6,15 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&family=Kanit&family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&family=Kanit&family=Roboto+Mono:wght@200;400&display=swap" rel="stylesheet">
     <title>Chemistry - P1</title>
 </head>
 
 
 
 <body>
-    <div id="timer" class="timer">45:00</div>
+    <div class="P1">Chem P1</div>
+    <div id="timer" class="timer">01:15:00</div>
     <div class="full_prog">
         <div id="progress-container" class="progress-container">
         <div id="progress" class="progress">
@@ -35,61 +36,63 @@
 
     <script>
         let timer;
-        let isPaused = false;
-        let timeRemaining = 45 * 60; // 45 minutes in seconds
+let isPaused = false;
+let timeRemaining = 75 * 60; // 75 minutes in seconds
 
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function updateTimer() {
+    document.getElementById('timer').textContent = formatTime(timeRemaining);
+    const progressBar = document.getElementById('progress-inner');
+    const totalSeconds = 75 * 60;
+    const progressPercentage = ((totalSeconds - timeRemaining) / totalSeconds) * 100;
+    progressBar.style.width = progressPercentage + '%';
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (!isPaused && timeRemaining > 0) {
+            timeRemaining--;
+            updateTimer();
         }
-
-        function updateTimer() {
-            document.getElementById('timer').textContent = formatTime(timeRemaining);
-            const progressBar = document.getElementById('progress-inner');
-            const totalSeconds = 45 * 60;
-            const progressPercentage = ((totalSeconds - timeRemaining) / totalSeconds) * 100;
-            progressBar.style.width = progressPercentage + '%';
-        }
-
-        function startTimer() {
-            timer = setInterval(() => {
-                if (!isPaused && timeRemaining > 0) {
-                    timeRemaining--;
-                    updateTimer();
-                }
-                if (timeRemaining === 0) {
-                    clearInterval(timer);
-                    alert('Timer is up!');
-                }
-            }, 1000);
-        }
-
-        document.getElementById('start').addEventListener('click', () => {
-            startTimer();
-            document.getElementById('start').style.display = 'none';
-            document.getElementById('pause').style.display = 'inline-block';
-        });
-
-        document.getElementById('pause').addEventListener('click', () => {
-            isPaused = !isPaused;
-            if (isPaused) {
-                document.getElementById('pause').textContent = 'Resume';
-            } else {
-                document.getElementById('pause').textContent = 'Pause';
-            }
-        });
-
-        document.getElementById('end').addEventListener('click', () => {
+        if (timeRemaining === 0) {
             clearInterval(timer);
-            document.getElementById('timer').textContent = formatTime(45 * 60); // Reset timer to 45 minutes
-            document.getElementById('start').style.display = 'inline-block';
-            document.getElementById('pause').style.display = 'none';
-            isPaused = false;
-            document.getElementById('progress-inner').style.width = '0%'; // Reset progress bar
-        });
+            alert('Timer is up!');
+        }
+    }, 1000);
+}
 
-        updateTimer();
+document.getElementById('start').addEventListener('click', () => {
+    startTimer();
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('pause').style.display = 'inline-block';
+});
+
+document.getElementById('pause').addEventListener('click', () => {
+    isPaused = !isPaused;
+    if (isPaused) {
+        document.getElementById('pause').textContent = 'Resume';
+    } else {
+        document.getElementById('pause').textContent = 'Pause';
+    }
+});
+
+document.getElementById('end').addEventListener('click', () => {
+    clearInterval(timer);
+    document.getElementById('timer').textContent = formatTime(75 * 60); // Reset timer to 75 minutes
+    document.getElementById('start').style.display = 'inline-block';
+    document.getElementById('pause').style.display = 'none';
+    isPaused = false;
+    document.getElementById('progress-inner').style.width = '0%'; // Reset progress bar
+});
+
+updateTimer();
+
     </script>
 </body>
 </html>
