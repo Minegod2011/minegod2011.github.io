@@ -10,21 +10,21 @@
     <title>Chemistry - P1</title>
 </head>
 
-
-
 <body>
     <div class="P1">Chem P1</div>
     <div id="timer" class="timer">01:15:00</div>
     <div class="full_prog">
         <div id="progress-container" class="progress-container">
-        <div id="progress" class="progress">
-        <div id="progress-inner" class="progress-inner"></div>
-    </div>        
-
-    <div id="controls" class="controls">
-        <button id="start" class="start">Start</button>
-        <button id="pause" class="pause">Pause</button>
-        <button id="end" class="end">End</button>
+            <div id="progress" class="progress">
+                <div id="progress-inner" class="progress-inner"></div>
+            </div>        
+            <div id="controls" class="controls">
+                <button id="start" class="start"><img src="start.png" width="50px"></button>
+                <div id="resume" class="resume" style="display: none;"><img src="resume.png" width="50px"></div>
+                <button id="pause" class="pause">Pause</button>
+                <button id="end" class="end"><img src="stop.png" width="50px"></button>
+            </div>
+        </div>
     </div>
     
     <div class="center">
@@ -36,63 +36,76 @@
 
     <script>
         let timer;
-let isPaused = false;
-let timeRemaining = 75 * 60; // 75 minutes in seconds
+        let isPaused = false;
+        let timeRemaining = 75 * 60; // 75 minutes in seconds
 
-function formatTime(seconds) {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-}
-
-function updateTimer() {
-    document.getElementById('timer').textContent = formatTime(timeRemaining);
-    const progressBar = document.getElementById('progress-inner');
-    const totalSeconds = 75 * 60;
-    const progressPercentage = ((totalSeconds - timeRemaining) / totalSeconds) * 100;
-    progressBar.style.width = progressPercentage + '%';
-}
-
-function startTimer() {
-    timer = setInterval(() => {
-        if (!isPaused && timeRemaining > 0) {
-            timeRemaining--;
-            updateTimer();
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
-        if (timeRemaining === 0) {
+
+        function updateTimer() {
+            document.getElementById('timer').textContent = formatTime(timeRemaining);
+            const progressBar = document.getElementById('progress-inner');
+            const totalSeconds = 75 * 60;
+            const progressPercentage = ((totalSeconds - timeRemaining) / totalSeconds) * 100;
+            progressBar.style.width = progressPercentage + '%';
+        }
+
+        function togglePauseResume() {
+            const pauseButton = document.getElementById('pause');
+            const resumeButton = document.getElementById('resume');
+            if (isPaused) {
+                pauseButton.style.display = 'inline-block';
+                resumeButton.style.display = 'none';
+            } else {
+                pauseButton.style.display = 'none';
+                resumeButton.style.display = 'inline-block';
+            }
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                if (!isPaused && timeRemaining > 0) {
+                    timeRemaining--;
+                    updateTimer();
+                }
+                if (timeRemaining === 0) {
+                    clearInterval(timer);
+                    alert('Timer is up!');
+                }
+            }, 1000);
+        }
+
+        document.getElementById('start').addEventListener('click', () => {
+            startTimer();
+            document.getElementById('start').style.display = 'none';
+            togglePauseResume();
+        });
+
+        document.getElementById('pause').addEventListener('click', () => {
+            isPaused = !isPaused;
+            togglePauseResume();
+        });
+
+        document.getElementById('resume').addEventListener('click', () => {
+            isPaused = !isPaused;
+            togglePauseResume();
+        });
+
+        document.getElementById('end').addEventListener('click', () => {
             clearInterval(timer);
-            alert('Timer is up!');
-        }
-    }, 1000);
-}
+            document.getElementById('timer').textContent = formatTime(75 * 60); // Reset timer to 75 minutes
+            document.getElementById('start').style.display = 'inline-block';
+            document.getElementById('pause').style.display = 'none';
+            document.getElementById('resume').style.display = 'none';
+            isPaused = false;
+            document.getElementById('progress-inner').style.width = '0%'; // Reset progress bar
+        });
 
-document.getElementById('start').addEventListener('click', () => {
-    startTimer();
-    document.getElementById('start').style.display = 'none';
-    document.getElementById('pause').style.display = 'inline-block';
-});
-
-document.getElementById('pause').addEventListener('click', () => {
-    isPaused = !isPaused;
-    if (isPaused) {
-        document.getElementById('pause').textContent = 'Resume';
-    } else {
-        document.getElementById('pause').textContent = 'Pause';
-    }
-});
-
-document.getElementById('end').addEventListener('click', () => {
-    clearInterval(timer);
-    document.getElementById('timer').textContent = formatTime(75 * 60); // Reset timer to 75 minutes
-    document.getElementById('start').style.display = 'inline-block';
-    document.getElementById('pause').style.display = 'none';
-    isPaused = false;
-    document.getElementById('progress-inner').style.width = '0%'; // Reset progress bar
-});
-
-updateTimer();
-
+        updateTimer();
     </script>
 </body>
 </html>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Timer</title>
+    <title>Timer with Icons</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,8 +15,8 @@
         }
 
         #progress-container {
-            width: 70%; /* Set the progress bar container width to 70% */
-            margin: 0 auto; /* Center align the container */
+            width: 70%;
+            margin: 0 auto;
         }
 
         #progress {
@@ -26,7 +27,7 @@
         }
 
         #progress-inner {
-            width: 0%; /* Initially, progress is 0% */
+            width: 0%;
             height: 100%;
             background-color: #4CAF50;
         }
@@ -41,36 +42,46 @@
     </style>
 </head>
 <body>
-    <h1>Timer</h1>
-    <div id="timer">45:00</div>
+    <h1>Timer with Icons</h1>
+    <div id="timer">75:00</div>
     <div id="progress-container">
         <div id="progress">
             <div id="progress-inner"></div>
         </div>
     </div>
     <div id="controls">
-        <button id="start">Start</button>
-        <button id="pause">Pause</button>
-        <button id="end">End</button>
+        <button id="start"><i class="fas fa-play"></i></button>
+        <button id="pause"><i class="fas fa-pause"></i></button>
+        <button id="end"><i class="fas fa-stop"></i></button>
     </div>
 
     <script>
         let timer;
         let isPaused = false;
-        let timeRemaining = 45 * 60; // 45 minutes in seconds
+        let timeRemaining = 75 * 60; // 75 minutes in seconds
 
         function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
             const secs = seconds % 60;
-            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }
 
         function updateTimer() {
             document.getElementById('timer').textContent = formatTime(timeRemaining);
             const progressBar = document.getElementById('progress-inner');
-            const totalSeconds = 45 * 60;
+            const totalSeconds = 75 * 60;
             const progressPercentage = ((totalSeconds - timeRemaining) / totalSeconds) * 100;
             progressBar.style.width = progressPercentage + '%';
+        }
+
+        function toggleIcons() {
+            const startButton = document.getElementById('start');
+            const pauseButton = document.getElementById('pause');
+            const endButton = document.getElementById('end');
+            startButton.innerHTML = '<i class="fas fa-play"></i>';
+            pauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+            endButton.innerHTML = '<i class="fas fa-stop"></i>';
         }
 
         function startTimer() {
@@ -82,31 +93,25 @@
                 if (timeRemaining === 0) {
                     clearInterval(timer);
                     alert('Timer is up!');
+                    toggleIcons(); // Reset icons
                 }
             }, 1000);
         }
 
         document.getElementById('start').addEventListener('click', () => {
             startTimer();
-            document.getElementById('start').style.display = 'none';
-            document.getElementById('pause').style.display = 'inline-block';
+            toggleIcons();
         });
 
         document.getElementById('pause').addEventListener('click', () => {
             isPaused = !isPaused;
-            if (isPaused) {
-                document.getElementById('pause').textContent = 'Resume';
-            } else {
-                document.getElementById('pause').textContent = 'Pause';
-            }
+            toggleIcons();
         });
 
         document.getElementById('end').addEventListener('click', () => {
             clearInterval(timer);
-            document.getElementById('timer').textContent = formatTime(45 * 60); // Reset timer to 45 minutes
-            document.getElementById('start').style.display = 'inline-block';
-            document.getElementById('pause').style.display = 'none';
-            isPaused = false;
+            document.getElementById('timer').textContent = formatTime(75 * 60); // Reset timer to 75 minutes
+            toggleIcons();
             document.getElementById('progress-inner').style.width = '0%'; // Reset progress bar
         });
 
