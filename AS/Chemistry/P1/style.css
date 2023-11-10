@@ -102,7 +102,7 @@ body
     height: 20px;
     background-color: #ccc;
     position: relative;
-    top: 500px;
+    top: 470px;
 }
 
 .progress-inner
@@ -115,25 +115,39 @@ body
 .controls
 {
     margin: 20px;
-    top: 540px;
+    top: 550px;
     position: absolute;
 }
 
 .pause
 {
     display: none;
+    background-color: transparent;
+    border: 0;
+    left: 0px;
+    position: absolute;
+}
+
+.resume
+{
+    left: 0px;
+    position: absolute;
 }
 
 .end
 {
     background-color: transparent;
     border: 0;
+    left: 130px;
+    position: absolute;
 }
 
 .start
 {
     background-color: transparent;
     border: 0;
+    left: 0px;
+    position: absolute;
 }
 
 .P1
