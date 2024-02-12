@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@300&family=Kanit&family=Roboto+Mono:wght@200;400&display=swap" rel="stylesheet">
+    <title>Chemistry - P1</title>
+</head>
+
+<body>
+    <div class="P1">Chem P1</div>
+    <div id="timer" class="timer">01:15:00</div>
+    <div class="full_prog">
+        <div id="progress-container" class="progress-container">
+            <div id="progress" class="progress">
+                <div id="progress-inner" class="progress-inner"></div>
+            </div>        
+                <button id="start" class="start"><img src="start.png" width="55px"></button>
+                <button id="resume" class="resume" style="display: none;"><img src="pause.png" width="50px"></button>
+                <button id="pause" class="pause"><img src="resume.png" width="50px"></button>
+                <a href="../index.html"><button id="end" class="end"><img src="stop.png" width="55px"></button></a>
+        </div>
+    </div>
+    
+    <div class="center">
+        <div class="main_cir"></div>
+        <div class="cover"></div>
+        <div class="cir"></div>
+        <div class="covered"></div>
+    </div>
+
+    <script>
+        let timer;
+        let isPaused = false;
+        let timeRemaining = 75 * 60; // 75 minutes in seconds
+        let originalTime = timeRemaining; // Store the original time
+
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimer() {
+    document.getElementById('timer').textContent = formatTime(timeRemaining);
+
+    if (timer) { // Only update title and progress bar if timer is running
+        document.title = formatTime(timeRemaining);
+
+        const progressBar = document.getElementById('progress-inner');
+        const totalSeconds = originalTime; // Use originalTime for progress calculation
+        const progressPercentage = ((totalSeconds - timeRemaining) / totalSeconds) * 100;
+        progressBar.style.width = progressPercentage + '%';
+    }
+}
+
+        function togglePauseResume() {
+            const pauseButton = document.getElementById('pause');
+            const resumeButton = document.getElementById('resume');
+            if (isPaused) {
+                pauseButton.style.display = 'inline-block';
+                resumeButton.style.display = 'none';
+            } else {
+                pauseButton.style.display = 'none';
+                resumeButton.style.display = 'inline-block';
+            }
+        }
+
+        function startTimer() {
+           // Reset timeRemaining to the original time when starting a new session
+           timeRemaining = originalTime;
+           updateTimer();
+           timer = setInterval(() => {
+               if (!isPaused && timeRemaining > 0) {
+                   timeRemaining--;
+                   updateTimer();
+               }
+               if (timeRemaining === 0) {
+                   clearInterval(timer);
+                   alert('Timer is up!');
+                   togglePauseResume();
+               }
+           }, 1000); // Execute every 1000 milliseconds (1 second)
+       }
+
+        document.getElementById('start').addEventListener('click', () => {
+            startTimer();
+            document.getElementById('start').style.display = 'none';
+            togglePauseResume();
+        });
+
+        document.getElementById('pause').addEventListener('click', () => {
+            isPaused = !isPaused;
+            togglePauseResume();
+        });
+
+        document.getElementById('resume').addEventListener('click', () => {
+            isPaused = !isPaused;
+            togglePauseResume();
+        });
+
+        document.getElementById('end').addEventListener('click', () => {
+            clearInterval(timer);
+            timeRemaining = originalTime; // Reset timeRemaining to the original time when ending
+            document.getElementById('timer').textContent = formatTime(timeRemaining);
+            document.getElementById('start').style.display = 'inline-block';
+            document.getElementById('pause').style.display = 'none';
+            document.getElementById('resume').style.display = 'none';
+            isPaused = false;
+            document.getElementById('progress-inner').style.width = '0%'; // Reset progress bar
+        });
+
+        updateTimer();
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+body
+{
+    background-color: black;
+}
+
+.but
+{
+    width: 90%;
+}
+
+.center
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+}
+
+.a2_time
+{
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: #e7eeff;
+    font-family: 'Handjet';
+    font-size: 55pt;
+}
