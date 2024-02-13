@@ -1,0 +1,28 @@
+body
+{
+    background-color: black;
+    color: white;
+}
+
+.container
+{
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
+    align-items: center;
+    font-size: 3rem;
+    font-family: "Play", sans-serif;
+    margin-top: 20dvh;
+}
+
+.info
+{
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1.5rem;
+}
+
+a
+{
+    color: white;
+    text-decoration: none;
+}
